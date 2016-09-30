@@ -1,0 +1,50 @@
+<?php
+// $id$
+
+/**
+ * @file
+ * This module provides blocks rendering.
+ */
+ module_load_include('inc', 'render_block', 'functions'); 
+
+/**
+ * Implements hook_menu().
+ */
+function render_block_menu() {
+  $items = array();
+  $items['rendered_block'] = array(
+    'title'            => 'Rendered block',
+    'page callback'    => 'rendered_block_results_func',
+	'type'             => MENU_CALLBACK,
+	'access arguments' => array('Use the administration toolbar'),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_page_build().
+ * Adds render block form to the page_top region automatically.
+ */
+function render_block_page_build(&$page) {
+  $page['page_top']['render_block'] = array(
+    '#access' => user_access('access toolbar'),
+	'#theme' => 'render_block_form',
+    '#form' => drupal_get_form('block_id_form'),
+  );
+}
+
+/**
+ * Implements hook_theme().
+ */
+function render_block_theme() {
+  return array(
+    'render_block_form' => array(
+      'template' => 'render_block_form',
+	  'variables' => array('form' => NULL),
+    ),
+   'rendered_block_results' => array(
+      'template' => 'rendered_block_results',
+	  'variables' => array('results' => NULL),
+    ),
+  );
+}

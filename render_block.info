@@ -1,0 +1,7 @@
+;$id$
+
+name = Render block
+description = to render block
+core = 7.x
+package = Custom
+
